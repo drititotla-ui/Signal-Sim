@@ -1,0 +1,83 @@
+# ==============================================================================
+# SIGNALSIM-INDIA: Scenario S1 Configuration
+# Milestone: P2-M01 (Foundation)
+# Status: PROVISIONAL EXPERIMENTAL ASSUMPTION — PENDING P1 CAPACITY VALIDATION
+# ==============================================================================
+# S1 represents an unsaturated, off-peak traffic regime (50% nominal design demand).
+#
+# NOTE: The demand multiplier (0.50) is an experimental assumption, NOT a verified
+# empirical traffic statistic. Baseline design volume (100% capacity) must be
+# validated against P1's geometric network capacity once P1 completes the network.
+# ==============================================================================
+
+scenario:
+  id: "S1"
+  name: "Unsaturated / Off-Peak Flow"
+  description: "Low demand regime (50% of nominal baseline capacity) to evaluate controller latency and green allocation efficiency under sparse arrivals."
+  
+  # Demand Multiplier relative to baseline design capacity (1.00)
+  demand_multiplier: 0.50
+
+  # Traffic regime classification
+  regime: "unsaturated"
+  is_provisional: true
+  status: "PENDING_P1_VALIDATION"
+
+# ------------------------------------------------------------------------------
+# Fleet Vehicle Composition (Pending P1 Vehicle Type Definitions)
+# ------------------------------------------------------------------------------
+# Indian mixed traffic consists of heterogeneous vehicle classes with distinct
+# kinematic footprints (acceleration, length, minGap, lateral positioning).
+# Exact percentages pending P1 empirical calibration or synthetic design spec.
+vehicle_composition:
+  placeholder: "<PENDING_P1_FLEET_MIX>"
+  classes:
+    two_wheeler:
+      vtype_id: "<PENDING_P1_VTYPE_2W>"
+      target_share_pct: "<PENDING_P1_SHARE_2W>"
+    three_wheeler_auto:
+      vtype_id: "<PENDING_P1_VTYPE_3W>"
+      target_share_pct: "<PENDING_P1_SHARE_3W>"
+    passenger_car:
+      vtype_id: "<PENDING_P1_VTYPE_CAR>"
+      target_share_pct: "<PENDING_P1_SHARE_CAR>"
+    bus:
+      vtype_id: "<PENDING_P1_VTYPE_BUS>"
+      target_share_pct: "<PENDING_P1_SHARE_BUS>"
+    light_commercial_vehicle:
+      vtype_id: "<PENDING_P1_VTYPE_LCV>"
+      target_share_pct: "<PENDING_P1_SHARE_LCV>"
+
+# ------------------------------------------------------------------------------
+# Turning Movement Proportions (Pending P1 Network Geometry & Phase Rules)
+# ------------------------------------------------------------------------------
+# In left-hand traffic (LHT), left turns are unobstructed/filter turns, through
+# movements are primary, and right turns cross opposing traffic.
+turning_proportions:
+  placeholder: "<PENDING_P1_TURNING_RATIOS>"
+  arms:
+    north_arm:
+      left_turn_pct: "<PENDING_P1_NORTH_LEFT>"
+      through_pct: "<PENDING_P1_NORTH_THROUGH>"
+      right_turn_pct: "<PENDING_P1_NORTH_RIGHT>"
+    south_arm:
+      left_turn_pct: "<PENDING_P1_SOUTH_LEFT>"
+      through_pct: "<PENDING_P1_SOUTH_THROUGH>"
+      right_turn_pct: "<PENDING_P1_SOUTH_RIGHT>"
+    east_arm:
+      left_turn_pct: "<PENDING_P1_EAST_LEFT>"
+      through_pct: "<PENDING_P1_EAST_THROUGH>"
+      right_turn_pct: "<PENDING_P1_EAST_RIGHT>"
+    west_arm:
+      left_turn_pct: "<PENDING_P1_WEST_LEFT>"
+      through_pct: "<PENDING_P1_WEST_THROUGH>"
+      right_turn_pct: "<PENDING_P1_WEST_RIGHT>"
+
+# ------------------------------------------------------------------------------
+# Scenario-Specific Settings
+# ------------------------------------------------------------------------------
+scenario_settings:
+  expected_congestion_level: "low"
+  saturation_index_target: "<PENDING_P1_SATURATION_S1>"
+  notes: "Expect minimal queuing across all controllers; tests minimum cycle efficiency and latency."
+

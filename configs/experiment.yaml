@@ -1,0 +1,111 @@
+# ==============================================================================
+# SIGNALSIM-INDIA: Main Experiment Configuration
+# Milestone: P2-M01 (Foundation)
+# Status: PROVISIONAL SPECIFICATION — PENDING P1 INTEGRATION
+# ==============================================================================
+# This configuration file defines global parameters for evaluating traffic
+# signal controllers (Fixed-time, Max-pressure, PPO Reinforcement Learning)
+# on an Indian 4-arm mixed-traffic intersection with left-hand traffic (LHT).
+#
+# IMPORTANT:
+# Placeholders formatted as <PENDING_P1_*> require confirmation and integration
+# from Partner 1 (P1 - Network, Vehicle, and Controller owner).
+# ==============================================================================
+
+experiment:
+  name: "signalsim_india_p2_benchmark"
+  description: "Comparative evaluation of Fixed-Time, Max-Pressure, and PPO signal controllers under Indian mixed-traffic conditions."
+  version: "0.1.0"
+  traffic_direction: "left-hand"  # Rule of the road for Indian intersections
+
+# ------------------------------------------------------------------------------
+# Simulation Timing Configuration (Provisional - Pending P1 confirmation)
+# ------------------------------------------------------------------------------
+simulation:
+  step_length_seconds: 1.0        # TraCI simulation step size (delta-t in seconds)
+  
+  # Temporal periods for rigorous evaluation:
+  # - warm_up_seconds: Network fills up to reach stochastic steady-state.
+  #   Departures during warm-up are EXCLUDED from the evaluation cohort.
+  # - evaluation_seconds: The measurement window during which evaluation cohort
+  #   vehicles depart into the network.
+  # - drain_seconds: Clearance window after evaluation departure cutoff, allowing
+  #   evaluation cohort vehicles to complete their trips without truncation bias.
+  warm_up_seconds: 600            # 10 minutes (provisional assumption, pending P1 validation)
+  evaluation_seconds: 3600        # 60 minutes (provisional assumption, 1 evaluation hour)
+  drain_seconds: 900              # 15 minutes (provisional assumption, network clearance window)
+
+# ------------------------------------------------------------------------------
+# Evaluation Random Seeds
+# ------------------------------------------------------------------------------
+# In accordance with matched-seed experimental methodology, each controller
+# will be evaluated against identical random seeds to eliminate demand variance.
+seeds:
+  evaluation_seeds:
+    - 42
+    - 101
+    - 202
+    - 303
+    - 404
+
+# ------------------------------------------------------------------------------
+# Controller Identifiers
+# ------------------------------------------------------------------------------
+# Candidate controllers under evaluation:
+# 1. fixed_time: Baseline fixed-time plan (IRC:93-1985 guidelines, P1 implementation).
+# 2. max_pressure: Network-wide decentralized max-pressure controller (P1 implementation).
+# 3. ppo: Deep Reinforcement Learning PPO agent with frozen evaluation policy (P1 implementation).
+controllers:
+  candidates:
+    - id: "fixed_time"
+      name: "Fixed-Time Controller"
+      type: "baseline"
+      description: "Fixed cycle length and phase split based on historical Indian traffic norms."
+    - id: "max_pressure"
+      name: "Max-Pressure Controller"
+      type: "heuristic"
+      description: "Pressure-minimizing phase selection based on upstream and downstream queue differentials."
+    - id: "ppo"
+      name: "PPO Reinforcement Learning"
+      type: "reinforcement_learning"
+      description: "Proximal Policy Optimization policy with frozen weights and deterministic evaluation."
+
+# ------------------------------------------------------------------------------
+# Network and Vehicle Assets (Owned by P1)
+# ------------------------------------------------------------------------------
+paths:
+  # SUMO network configuration file (.net.xml)
+  network_file: "<PENDING_P1_NETWORK_PATH>"
+  
+  # Heterogeneous vehicle type definitions (.vtype.xml)
+  vehicle_types_file: "<PENDING_P1_VEHICLE_CONFIG>"
+  
+  # Traffic light logic and signal phase definitions (.add.xml or embedded in net)
+  traffic_light_id: "<PENDING_P1_TRAFFIC_LIGHT_ID>"
+  
+  # Output directories for generated artifacts and raw simulation outputs
+  output:
+    raw_tripinfo_dir: "results/raw_tripinfo"
+    csv_metrics_dir: "results/csv"
+    summaries_dir: "results/summaries"
+    plots_dir: "results/plots"
+
+# ------------------------------------------------------------------------------
+# Route Generation Settings (P2 Deterministic Generator)
+# ------------------------------------------------------------------------------
+routes:
+  generator_mode: "deterministic" # Routes generated upfront per (scenario, seed) tuple
+  routes_dir: "simulation/routes"
+  route_prefix: "route_scenario"
+  
+  # Network topology entry and exit edges (to be confirmed with P1)
+  edges:
+    north_inflow: "<PENDING_P1_NORTH_INFLOW_EDGE>"
+    south_inflow: "<PENDING_P1_SOUTH_INFLOW_EDGE>"
+    east_inflow: "<PENDING_P1_EAST_INFLOW_EDGE>"
+    west_inflow: "<PENDING_P1_WEST_INFLOW_EDGE>"
+    north_outflow: "<PENDING_P1_NORTH_OUTFLOW_EDGE>"
+    south_outflow: "<PENDING_P1_SOUTH_OUTFLOW_EDGE>"
+    east_outflow: "<PENDING_P1_EAST_OUTFLOW_EDGE>"
+    west_outflow: "<PENDING_P1_WEST_OUTFLOW_EDGE>"
+

@@ -1,0 +1,78 @@
+# ==============================================================================
+# SIGNALSIM-INDIA: Scenario S4 Configuration
+# Milestone: P2-M01 (Foundation)
+# Status: PROVISIONAL EXPERIMENTAL ASSUMPTION — PENDING P1 CAPACITY VALIDATION
+# ==============================================================================
+# S4 represents an oversaturated, peak congestion regime (125% nominal demand).
+#
+# NOTE: The demand multiplier (1.25) is an experimental assumption, NOT a verified
+# empirical traffic statistic. Baseline design volume (100% capacity) must be
+# validated against P1's geometric network capacity once P1 completes the network.
+# ==============================================================================
+
+scenario:
+  id: "S4"
+  name: "Oversaturated / Peak Congestion"
+  description: "Oversaturated demand regime (125% of nominal baseline capacity) to evaluate controller resilience under severe spillback and queue accumulation."
+  
+  # Demand Multiplier relative to baseline design capacity (1.00)
+  demand_multiplier: 1.25
+
+  # Traffic regime classification
+  regime: "oversaturated"
+  is_provisional: true
+  status: "PENDING_P1_VALIDATION"
+
+# ------------------------------------------------------------------------------
+# Fleet Vehicle Composition (Pending P1 Vehicle Type Definitions)
+# ------------------------------------------------------------------------------
+vehicle_composition:
+  placeholder: "<PENDING_P1_FLEET_MIX>"
+  classes:
+    two_wheeler:
+      vtype_id: "<PENDING_P1_VTYPE_2W>"
+      target_share_pct: "<PENDING_P1_SHARE_2W>"
+    three_wheeler_auto:
+      vtype_id: "<PENDING_P1_VTYPE_3W>"
+      target_share_pct: "<PENDING_P1_SHARE_3W>"
+    passenger_car:
+      vtype_id: "<PENDING_P1_VTYPE_CAR>"
+      target_share_pct: "<PENDING_P1_SHARE_CAR>"
+    bus:
+      vtype_id: "<PENDING_P1_VTYPE_BUS>"
+      target_share_pct: "<PENDING_P1_SHARE_BUS>"
+    light_commercial_vehicle:
+      vtype_id: "<PENDING_P1_VTYPE_LCV>"
+      target_share_pct: "<PENDING_P1_SHARE_LCV>"
+
+# ------------------------------------------------------------------------------
+# Turning Movement Proportions (Pending P1 Network Geometry & Phase Rules)
+# ------------------------------------------------------------------------------
+turning_proportions:
+  placeholder: "<PENDING_P1_TURNING_RATIOS>"
+  arms:
+    north_arm:
+      left_turn_pct: "<PENDING_P1_NORTH_LEFT>"
+      through_pct: "<PENDING_P1_NORTH_THROUGH>"
+      right_turn_pct: "<PENDING_P1_NORTH_RIGHT>"
+    south_arm:
+      left_turn_pct: "<PENDING_P1_SOUTH_LEFT>"
+      through_pct: "<PENDING_P1_SOUTH_THROUGH>"
+      right_turn_pct: "<PENDING_P1_SOUTH_RIGHT>"
+    east_arm:
+      left_turn_pct: "<PENDING_P1_EAST_LEFT>"
+      through_pct: "<PENDING_P1_EAST_THROUGH>"
+      right_turn_pct: "<PENDING_P1_EAST_RIGHT>"
+    west_arm:
+      left_turn_pct: "<PENDING_P1_WEST_LEFT>"
+      through_pct: "<PENDING_P1_WEST_THROUGH>"
+      right_turn_pct: "<PENDING_P1_WEST_RIGHT>"
+
+# ------------------------------------------------------------------------------
+# Scenario-Specific Settings
+# ------------------------------------------------------------------------------
+scenario_settings:
+  expected_congestion_level: "severe"
+  saturation_index_target: "<PENDING_P1_SATURATION_S4>"
+  notes: "Residual queues persist across cycles; tests queue management, prevention of upstream gridlock, and throughput degradation."
+
