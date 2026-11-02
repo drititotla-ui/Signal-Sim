@@ -1,0 +1,66 @@
+
+
+<routes>
+
+    <!-- North to South -->
+    <route id="north_to_south"
+           edges="-E1 E3"/>
+
+    <!-- South to North -->
+    <route id="south_to_north"
+           edges="-E3 E1"/>
+
+    <!-- East to West -->
+    <route id="east_to_west"
+           edges="-E2 E4"/>
+
+    <!-- West to East -->
+    <route id="west_to_east"
+           edges="-E4 E2"/>
+
+
+    <!-- CONTINUOUS CAR TRAFFIC -->
+    <flow id="car_flow"
+          type="car"
+          route="north_to_south"
+          begin="0" end="3600"
+          period="3"/>
+
+    <!-- CONTINUOUS BIKE TRAFFIC -->
+    <flow id="bike_flow"
+          type="bike"
+          route="east_to_west"
+          begin="1" end="3600"
+          period="4"/>
+
+    <!-- CONTINUOUS AUTO TRAFFIC -->
+    <flow id="auto_flow"
+          type="auto"
+          route="south_to_north"
+          begin="2" end="3600"
+          period="5"/>
+
+    <!-- CONTINUOUS BUS TRAFFIC -->
+    <flow id="bus_flow"
+          type="bus"
+          route="west_to_east"
+          begin="3" end="3600"
+          period="15"/>
+
+    <!-- CONTINUOUS TRUCK TRAFFIC -->
+    <flow id="truck_flow"
+          type="truck"
+          route="north_to_south"
+          begin="4" end="3600"
+          period="12"/>
+
+    <!-- CONTINUOUS BICYCLE TRAFFIC -->
+    <flow id="bicycle_flow"
+          type="bicycle"
+          route="east_to_west"
+          begin="5" end="3600"
+          period="6"/>
+
+</routes>
+
+
