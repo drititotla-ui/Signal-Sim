@@ -82,9 +82,59 @@ def run_one(
 
 ---
 
-## 3. Outstanding Information & Assets Required from P1
+## 3. Agreed Experimental Parameters
 
-Before P2 can implement the experiment runner and route generator in subsequent milestones, P1 must confirm and provide the following 14 items:
+The following operational parameters have been agreed between P1 and P2 for the benchmarking evaluation:
+
+| Parameter | Agreed value |
+|---|---|
+| Baseline demand | 600 vehicles/hour/approach |
+| Turning split | Left 20%, straight 60%, right 20% |
+| SUMO simulation step | 0.1 seconds |
+| Controller decision interval | 10 seconds |
+| Warm-up | 600 seconds |
+| Evaluation | 3600 seconds |
+| Drain | 900 seconds |
+| Seeds | 42, 101, 202, 303, 404 |
+| Traffic direction | LHT |
+| Traffic-light ID | J2 |
+| Signal program | 0 |
+| Incoming edges | -E1, -E2, -E3, -E4 |
+| Outgoing edges | E1, E2, E3, E4 |
+
+### Turning Movement Proportions
+The turning proportions below are agreed experimental assumptions. They are applied uniformly across all four approaches.
+
+- **Left turn**: 20%
+- **Straight**: 60%
+- **Right turn**: 20%
+
+### Vehicle Fleet Composition Status
+> [!CAUTION]
+> **AWAITING CLARIFICATION — INCOMPLETE FLEET PROPORTIONS (95% TOTAL)**
+> The currently proposed vehicle mix proportions are:
+> - `car`: 30%
+> - `bike`: 35%
+> - `auto`: 20%
+> - `bus`: 5%
+> - `truck`: 5%
+>
+> **Total**: $30\% + 35\% + 20\% + 5\% + 5\% = \mathbf{95\%}$.
+>
+> The project defines **six** active vehicle types in `vTypes.add.xml` (`car`, `bike`, `auto`, `bus`, `truck`, `bicycle`). The proposed specification provides shares for only 5 classes and leaves 5% unallocated (e.g., whether `bicycle` receives the remaining 5%, or if other proportions should be adjusted).
+>
+> **Resolution Protocol**: In accordance with experimental rigor, P2 will **not invent** the missing 5% or silently normalise the mix. Generation of the 20 final experimental route datasets is suspended until P1 clarifies the complete 100% allocation across all vehicle types.
+
+### Network Capacity & Demand Validation Note
+> [!WARNING]
+> **CAPACITY VALIDATION PENDING**
+> With baseline demand agreed at $600\text{ veh/h/approach}$ ($2400\text{ veh/h}$ total baseline demand across the 4 approaches in S3, scaling to $3000\text{ veh/h}$ in S4), network storage capacity must be empirically validated against P1's network. The four approach arms are physically short ($20.5\text{ m}$ to $28.9\text{ m}$), holding only 2–3 passenger cars or 1 bus per lane. Simulation runs must verify whether queue spillback into insertion boundaries produces unmanageable `departDelay`.
+
+---
+
+## 4. Outstanding Information & Assets Required from P1
+
+Before P2 can finalize the experimental route datasets and implement the experiment runner, P1 must confirm and provide the following 14 items:
 
 | # | Item Required | Description | Blocking For |
 | :- | :--- | :--- | :--- |
@@ -105,7 +155,7 @@ Before P2 can implement the experiment runner and route generator in subsequent 
 
 ---
 
-## 4. Next Steps for Interface Ratification
+## 5. Next Steps for Interface Ratification
 1. P1 reviews this document and confirms or amends the signature of `run_one(...)`.
 2. P1 populates the 14 placeholder items with finalized network paths and IDs.
 3. P2 transitions the placeholders from `PENDING_P1` to `SOURCED` in `docs/parameter_register.csv`.

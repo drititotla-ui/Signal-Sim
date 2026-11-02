@@ -49,29 +49,15 @@ vehicle_composition:
       target_share_pct: "<PENDING_P1_SHARE_LCV>"
 
 # ------------------------------------------------------------------------------
-# Turning Movement Proportions (Pending P1 Network Geometry & Phase Rules)
+# Turning Movement Proportions
 # ------------------------------------------------------------------------------
 # In left-hand traffic (LHT), left turns are unobstructed/filter turns, through
 # movements are primary, and right turns cross opposing traffic.
+# Agreed proportions: left 20%, straight 60%, right 20%
 turning_proportions:
-  placeholder: "<PENDING_P1_TURNING_RATIOS>"
-  arms:
-    north_arm:
-      left_turn_pct: "<PENDING_P1_NORTH_LEFT>"
-      through_pct: "<PENDING_P1_NORTH_THROUGH>"
-      right_turn_pct: "<PENDING_P1_NORTH_RIGHT>"
-    south_arm:
-      left_turn_pct: "<PENDING_P1_SOUTH_LEFT>"
-      through_pct: "<PENDING_P1_SOUTH_THROUGH>"
-      right_turn_pct: "<PENDING_P1_SOUTH_RIGHT>"
-    east_arm:
-      left_turn_pct: "<PENDING_P1_EAST_LEFT>"
-      through_pct: "<PENDING_P1_EAST_THROUGH>"
-      right_turn_pct: "<PENDING_P1_EAST_RIGHT>"
-    west_arm:
-      left_turn_pct: "<PENDING_P1_WEST_LEFT>"
-      through_pct: "<PENDING_P1_WEST_THROUGH>"
-      right_turn_pct: "<PENDING_P1_WEST_RIGHT>"
+  left: 0.20
+  straight: 0.60
+  right: 0.20
 
 # ------------------------------------------------------------------------------
 # Scenario-Specific Settings

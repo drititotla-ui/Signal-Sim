@@ -22,7 +22,9 @@ experiment:
 # Simulation Timing Configuration (Provisional - Pending P1 confirmation)
 # ------------------------------------------------------------------------------
 simulation:
-  step_length_seconds: 1.0        # TraCI simulation step size (delta-t in seconds)
+  step_length_seconds: 0.1        # SUMO simulation step size (delta-t in seconds)
+  controller_decision_interval_seconds: 10.0 # Control actuation interval (seconds)
+  baseline_demand_per_approach: 600 # Vehicles per hour per approach arm
   
   # Temporal periods for rigorous evaluation:
   # - warm_up_seconds: Network fills up to reach stochastic steady-state.
@@ -80,8 +82,9 @@ paths:
   # Heterogeneous vehicle type definitions (.vtype.xml)
   vehicle_types_file: "<PENDING_P1_VEHICLE_CONFIG>"
   
-  # Traffic light logic and signal phase definitions (.add.xml or embedded in net)
-  traffic_light_id: "<PENDING_P1_TRAFFIC_LIGHT_ID>"
+  # Traffic light logic and signal phase definitions
+  traffic_light_id: "J2"
+  signal_program: "0"
   
   # Output directories for generated artifacts and raw simulation outputs
   output:
@@ -98,14 +101,14 @@ routes:
   routes_dir: "simulation/routes"
   route_prefix: "route_scenario"
   
-  # Network topology entry and exit edges (to be confirmed with P1)
+  # Network topology entry and exit edges (Agreed LHT edges)
   edges:
-    north_inflow: "<PENDING_P1_NORTH_INFLOW_EDGE>"
-    south_inflow: "<PENDING_P1_SOUTH_INFLOW_EDGE>"
-    east_inflow: "<PENDING_P1_EAST_INFLOW_EDGE>"
-    west_inflow: "<PENDING_P1_WEST_INFLOW_EDGE>"
-    north_outflow: "<PENDING_P1_NORTH_OUTFLOW_EDGE>"
-    south_outflow: "<PENDING_P1_SOUTH_OUTFLOW_EDGE>"
-    east_outflow: "<PENDING_P1_EAST_OUTFLOW_EDGE>"
-    west_outflow: "<PENDING_P1_WEST_OUTFLOW_EDGE>"
+    north_inflow: "-E1"
+    south_inflow: "-E3"
+    east_inflow: "-E2"
+    west_inflow: "-E4"
+    north_outflow: "E1"
+    south_outflow: "E3"
+    east_outflow: "E2"
+    west_outflow: "E4"
 
