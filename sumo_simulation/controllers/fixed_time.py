@@ -1,12 +1,12 @@
-
 from pathlib import Path
+import shutil
 import traci
 
 # Project paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 CONFIG = BASE_DIR / "signalsim1_fixed.sumocfg"
 
-SUMO = r"C:\Program Files (x86)\SUMO\bin\sumo-gui.exe"
+SUMO = shutil.which("sumo-gui") or shutil.which("sumo") or r"C:\Program Files (x86)\Eclipse\Sumo\bin\sumo-gui.exe"
 
 # Verified six-phase fixed-time program
 PHASE_DURATIONS = [30, 3, 1, 30, 3, 1]

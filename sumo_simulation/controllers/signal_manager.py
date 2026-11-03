@@ -1,4 +1,3 @@
-
 import traci
 
 
@@ -26,15 +25,16 @@ class SignalManager:
         "rrrrrrrrrrrrrrrrrrrr"
     ]
 
-    def __init__(self, tls_id="J2"):
+    def __init__(self, tls_id="J2", connection=None):
         self.tls_id = tls_id
+        self.conn = connection if connection is not None else traci
         self.group = 0
         self.stage = "green"
-        self.stage_started = traci.simulation.getTime()
+        self.stage_started = self.conn.simulation.getTime()
         self.pending_group = None
 
         # Verify that SUMO has the expected program
-        programs = traci.trafficlight.getAllProgramLogics(tls_id)
+        programs = self.conn.trafficlight.getAllProgramLogics(tls_id)
         if not any(
             len(program.phases) == 6
             and [p.state for p in program.phases] == self.STATES
@@ -47,11 +47,11 @@ class SignalManager:
         self._set_phase(self.GREEN[self.group], 10000)
 
     def _set_phase(self, phase, duration):
-        traci.trafficlight.setPhase(self.tls_id, phase)
-        traci.trafficlight.setPhaseDuration(
+        self.conn.trafficlight.setPhase(self.tls_id, phase)
+        self.conn.trafficlight.setPhaseDuration(
             self.tls_id, duration
         )
-        self.stage_started = traci.simulation.getTime()
+        self.stage_started = self.conn.simulation.getTime()
 
     def request(self, group):
         """Request green group 0 or 1."""
@@ -65,7 +65,7 @@ class SignalManager:
             return False
 
         elapsed = (
-            traci.simulation.getTime() - self.stage_started
+            self.conn.simulation.getTime() - self.stage_started
         )
 
         if elapsed < self.MIN_GREEN:
@@ -80,7 +80,7 @@ class SignalManager:
 
     def update(self):
         """Call once after each simulation step."""
-        now = traci.simulation.getTime()
+        now = self.conn.simulation.getTime()
         elapsed = now - self.stage_started
 
         if self.stage == "yellow":
@@ -104,8 +104,8 @@ class SignalManager:
         return {
             "group": self.group,
             "stage": self.stage,
-            "phase": traci.trafficlight.getPhase(
+            "phase": self.conn.trafficlight.getPhase(
                 self.tls_id
             ),
-            "time": traci.simulation.getTime()
+            "time": self.conn.simulation.getTime()
         }

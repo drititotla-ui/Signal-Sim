@@ -77,10 +77,10 @@ controllers:
 # ------------------------------------------------------------------------------
 paths:
   # SUMO network configuration file (.net.xml)
-  network_file: "<PENDING_P1_NETWORK_PATH>"
+  network_file: "lht_working/candidate/signalsim_lht_timed.net.xml"
   
   # Heterogeneous vehicle type definitions (.vtype.xml)
-  vehicle_types_file: "<PENDING_P1_VEHICLE_CONFIG>"
+  vehicle_types_file: "sumo_simulation/vTypes.add.xml"
   
   # Traffic light logic and signal phase definitions
   traffic_light_id: "J2"

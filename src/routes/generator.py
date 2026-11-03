@@ -88,6 +88,25 @@ PROVISIONAL_UNRESOLVED_FLEET_MIX: Dict[str, float] = {
     "truck": 0.05,
 }
 
+# Confirmed 6-class fleet composition (100% total, 3960 vehicles)
+CONFIRMED_FLEET_COUNTS: Dict[str, int] = {
+    "car": 1200,
+    "bike": 900,
+    "auto": 720,
+    "bus": 240,
+    "truck": 300,
+    "bicycle": 600,
+}
+
+CONFIRMED_FLEET_MIX: Dict[str, float] = {
+    "car": 1200 / 3960,
+    "bike": 900 / 3960,
+    "auto": 720 / 3960,
+    "bus": 240 / 3960,
+    "truck": 300 / 3960,
+    "bicycle": 600 / 3960,
+}
+
 DEFAULT_SCENARIO_MULTIPLIERS: Dict[str, float] = {
     "S1": 0.50,
     "S2": 0.75,

@@ -1,6 +1,6 @@
 <configuration>
     <input>
-        <net-file value="sumo_simulation/signalsim.net.xml"/>
+        <net-file value="../lht_working/candidate/signalsim_lht_timed.net.xml"/>
         <route-files value="traffic.rou.xml"/>
         <additional-files value="vTypes.add.xml"/>
     </input>
