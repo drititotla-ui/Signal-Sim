@@ -3,3 +3,13 @@ __pycache__/
 *.pyc
 .env
 .vscode/
+# Python temporary files
+__pycache__/
+*.pyc
+
+# SUMO generated simulation outputs
+results/traffic_scenarios/*.xml
+results/traffic_scenarios/*.log
+sumo_simulation/*_tripinfo.xml
+sumo_simulation/*_summary.xml
+sumo_simulation/*_validation.log

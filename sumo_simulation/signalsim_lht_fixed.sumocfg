@@ -1,0 +1,12 @@
+<configuration>
+    <input>
+        <net-file value="../lht_working/candidate/signalsim_lht_timed.net.xml"/>
+        <route-files value="traffic.rou.xml"/>
+        <additional-files value="vTypes.add.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="3600"/>
+        <step-length value="0.1"/>
+    </time>
+</configuration>
