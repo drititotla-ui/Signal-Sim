@@ -1,8 +1,8 @@
 """
-Automated Unit and Integration Tests for Streamlit Multipage Frontend (M04.2.3).
+Automated Unit and Integration Tests for Streamlit Multipage Frontend.
 
 Tests:
-1. Prerequisite verification and parameter validation in simulation_runner.
+1. Prerequisite verification (headless and optional GUI) and parameter validation in simulation_runner.
 2. Safe summary merging preserving existing benchmark records.
 3. Streamlit AppTest execution across all six modular views.
 4. Header rendering integrity (no raw HTML tags leaked).
@@ -31,8 +31,15 @@ class TestSimulationRunner(unittest.TestCase):
     """Verifies validation and execution safety guards in simulation_runner."""
 
     def test_check_prerequisites(self):
-        ok, msg = check_prerequisites()
-        self.assertTrue(ok, f"Prerequisites should pass in working repo: {msg}")
+        ok, msg = check_prerequisites(gui=False)
+        self.assertTrue(ok, f"Headless prerequisites should pass: {msg}")
+
+    def test_check_prerequisites_gui_compatible(self):
+        """Verifies optional SUMO GUI prerequisite check runs without crashing."""
+        ok, msg = check_prerequisites(gui=True)
+        # Should either return True (sumo-gui found) or False with clean message, never uncaught exception
+        self.assertIsInstance(ok, bool)
+        self.assertIsInstance(msg, str)
 
     def test_invalid_controller_rejected(self):
         res = run_single_simulation(controller_id="ppo", scenario_id="S1", seed=42)

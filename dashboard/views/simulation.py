@@ -1,5 +1,5 @@
 """
-Simulation Control View for SIGNALSIM-INDIA (M04.2.3).
+Simulation Control View for SIGNALSIM-INDIA.
 
 Provides interactive execution staging and genuine local SUMO micro-simulation runs
 via experiments/run_experiments.py for Fixed-Time and Max-Pressure controllers
@@ -127,8 +127,14 @@ def render_simulation():
             "Select Evaluation Seed:",
             options=[42, 101, 202, 303, 404],
             index=0,
-            help="Evaluation seeds agreed in the formal P1–P2 interface specification.",
+            help="Evaluation seeds configured for reproducible benchmark simulation.",
         )
+
+    enable_gui = st.checkbox(
+        "Launch with SUMO Graphical Interface (sumo-gui)",
+        value=False,
+        help="Optional: Open visual SUMO-GUI window during execution. Defaults to headless for fast execution.",
+    )
 
     st.write("")
     btn_run = st.button("Run Simulation", type="primary", use_container_width=True)
@@ -141,12 +147,14 @@ def render_simulation():
         else:
             st.session_state["sim_running"] = True
             planned_run_id = f"{selected_controller_id}_{selected_scenario_id}_seed{selected_seed}"
+            gui_msg = " (GUI mode)" if enable_gui else ""
 
-            with st.spinner(f"Executing SUMO simulation: {planned_run_id} ... (Estimated: ~20-30s)"):
+            with st.spinner(f"Executing SUMO simulation: {planned_run_id}{gui_msg} ... (Estimated: ~20-30s)"):
                 result = run_single_simulation(
                     controller_id=selected_controller_id,
                     scenario_id=selected_scenario_id,
                     seed=selected_seed,
+                    gui=enable_gui,
                 )
 
             st.session_state["sim_running"] = False
@@ -198,7 +206,7 @@ def render_simulation():
                             st.code(result.stderr, language="text")
     else:
         st.markdown(textwrap.dedent(f"""
-        <div style="margin-top:0.5rem; padding:0.85rem; border-radius:8px; border:1px dashed #334155; text-align:center; color:#94A3B8; font-size:0.85rem;">
+        <div class="sim-info-box" style="margin-top:0.5rem; padding:0.85rem; border-radius:8px; border:1px dashed var(--border-color, #334155); text-align:center; font-size:0.85rem;">
             Ready to configure. Selected: <code>{selected_controller_id}</code> on <code>{selected_scenario_id}</code> (Seed {selected_seed}). Click above to launch.
         </div>
         """).strip(), unsafe_allow_html=True)

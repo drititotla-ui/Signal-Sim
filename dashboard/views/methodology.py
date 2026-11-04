@@ -1,7 +1,7 @@
 """
 Methodology and Experimental Protocol View for SIGNALSIM-INDIA.
 
-Documents the formal P1–P2 interface specifications, locked traffic demand scenarios,
+Documents the formal benchmark specifications, locked traffic demand scenarios,
 turning movement splits, controller state machines, and simulation parameters.
 """
 
@@ -23,7 +23,7 @@ def render_methodology():
     <div class="section-header">
         <div class="section-tag">Experimental Protocol</div>
         <h2 class="section-title">Methodology & Experimental Standards</h2>
-        <div class="section-subtitle">Locked experimental parameters, signal timing logic, and demand configurations agreed in the P1–P2 contract.</div>
+        <div class="section-subtitle">Locked experimental parameters, signal timing logic, and demand configurations defining the evaluation benchmark.</div>
     </div>
     """), unsafe_allow_html=True)
 
@@ -145,7 +145,7 @@ def render_methodology():
                 <code>303</code>
                 <code>404</code>
             </div>
-            <p style="font-size:0.85rem; color:#94A3B8;">
+            <p style="font-size:0.85rem;">
                 Controllers are benchmarked using <strong>matched seeds</strong>: Fixed-Time on Seed 42 is paired strictly with Max-Pressure on Seed 42. This controls for stochastic variation in vehicle arrival intervals.
             </p>
         </div>

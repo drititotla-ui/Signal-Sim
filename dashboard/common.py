@@ -117,7 +117,7 @@ def render_brand_header(current_page: str = ""):
                 f'<div style="background:#FFFFFF; border-radius:8px; padding:3px 10px; '
                 f'display:inline-flex; align-items:center; border:1px solid {pill_border}; '
                 f'box-shadow:{pill_shadow};">'
-                f'<img src="data:image/png;base64,{b64}" height="34" '
+                f'<img src="data:image/png;base64,{b64}" height="40" '
                 f'style="display:block; object-fit:contain;" alt="SignalSim-India Logo" />'
                 f'</div>'
             )
@@ -134,20 +134,29 @@ def render_brand_header(current_page: str = ""):
             + ';">SignalSim<span style="color:#14B8A6;">-INDIA</span></div>'
         )
 
-    # 3-column top branding bar with vertical centering
-    col_brand, col_theme, col_gh = st.columns([5, 2, 2], vertical_alignment="center")
+    # 3-column top branding bar: Logo top-left, GitHub repository middle-right, Theme toggle top-right
+    # Allocation [4.8, 2.6, 2.6] guarantees comfortable width and no clipping at desktop and narrower widths
+    col_brand, col_gh, col_theme = st.columns([4.8, 2.6, 2.6], vertical_alignment="center")
 
     with col_brand:
         brand_html = (
-            f'<div style="display:flex; align-items:center; gap:12px; margin-bottom:0.75rem;">'
+            f'<div style="display:flex; align-items:center; gap:12px;">'
             f'{logo_markup}'
             f'<span class="brand-badge">LHT ITS Research • SUMO 1.27.0</span>'
             f'</div>'
         )
         st.markdown(brand_html, unsafe_allow_html=True)
 
+    with col_gh:
+        st.link_button(
+            "GitHub Repository",
+            "https://github.com/drititotla-ui/Signal-Sim",
+            icon=":material/code:",
+            use_container_width=True,
+        )
+
     with col_theme:
-        # Segmented control for Light / Dark mode
+        # Segmented control for Light / Dark mode at top-right
         theme_options = ["🌙 Dark", "☀️ Light"]
         default_index = 0 if is_dark else 1
         selected_theme_icon = st.segmented_control(
@@ -162,10 +171,5 @@ def render_brand_header(current_page: str = ""):
             st.session_state["theme"] = target_theme
             st.rerun()
 
-    with col_gh:
-        st.link_button(
-            "GitHub Repository",
-            "https://github.com/drititotla-ui/Signal-Sim",
-            icon=":material/code:",
-            use_container_width=True,
-        )
+    # Spacing below top header before page content
+    st.markdown('<div style="margin-bottom: 0.85rem;"></div>', unsafe_allow_html=True)

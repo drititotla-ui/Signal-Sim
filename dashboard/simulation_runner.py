@@ -1,7 +1,7 @@
 """
-Local SUMO Simulation Execution Engine for SIGNALSIM-INDIA Dashboard (M04.2.3).
+Local SUMO Simulation Execution Engine for SIGNALSIM-INDIA Dashboard.
 
-Invokes the canonical P2-M03 experiment runner (experiments/run_experiments.py)
+Invokes the canonical experiment runner (experiments/run_experiments.py)
 via secure Python subprocess, validates prerequisites, prevents duplicate launches,
 preserves existing benchmark summaries, and refreshes dashboard data.
 """
@@ -39,7 +39,7 @@ class SimulationExecutionResult:
     error_message: Optional[str] = None
 
 
-def check_prerequisites() -> Tuple[bool, str]:
+def check_prerequisites(gui: bool = False) -> Tuple[bool, str]:
     """
     Verifies that local SUMO, network definitions, configs, and Python environment
     are present and ready for execution.
@@ -51,9 +51,10 @@ def check_prerequisites() -> Tuple[bool, str]:
     # 2. Check SUMO binary
     try:
         from src.experiments.sumo_manager import find_sumo_binary
-        sumo_bin = find_sumo_binary(gui=False)
+        sumo_bin = find_sumo_binary(gui=gui)
         if not sumo_bin or not Path(sumo_bin).exists():
-            return False, "SUMO binary not found in PATH or SUMO_HOME. Please verify SUMO installation."
+            binary_name = "sumo-gui" if gui else "sumo"
+            return False, f"{binary_name} binary not found in PATH or SUMO_HOME. Please verify SUMO installation."
     except Exception as err:
         return False, f"SUMO prerequisite check failed: {err}"
 
@@ -117,6 +118,7 @@ def run_single_simulation(
     controller_id: str,
     scenario_id: str,
     seed: int,
+    gui: bool = False,
     timeout_seconds: int = 300,
 ) -> SimulationExecutionResult:
     """
@@ -169,7 +171,7 @@ def run_single_simulation(
         )
 
     # 2. Check Prerequisites
-    prereq_ok, prereq_msg = check_prerequisites()
+    prereq_ok, prereq_msg = check_prerequisites(gui=gui)
     if not prereq_ok:
         return SimulationExecutionResult(
             success=False,
@@ -201,6 +203,8 @@ def run_single_simulation(
         "--scenarios", scenario_id,
         "--seeds", str(seed),
     ]
+    if gui:
+        cmd.append("--gui")
 
     try:
         proc = subprocess.run(

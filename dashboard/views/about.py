@@ -2,7 +2,7 @@
 About Page View for SIGNALSIM-INDIA.
 
 Documents project background, research motivations, software architecture stack,
-team responsibilities, and source repository information.
+and source repository information.
 """
 
 import streamlit as st
@@ -38,27 +38,6 @@ def render_about():
         </div>
         """), unsafe_allow_html=True)
 
-        st.markdown(clean_html("""
-        <div class="its-card">
-            <h4>Engineering Team & Division of Responsibilities</h4>
-            <p style="margin-bottom:0.75rem;">
-                SIGNALSIM-INDIA is developed as a collaborative engineering platform between two partners:
-            </p>
-            <div class="its-subcard" style="margin-bottom:0.75rem;">
-                <strong style="color:#2DD4BF;">P1 (Pritika) — Simulation Modeling & Controller Algorithms:</strong>
-                <p style="font-size:0.85rem; margin-top:0.25rem;">
-                    Responsible for SUMO network geometry (`signalsim_lht_timed.net.xml`), LHT topology conversion, signal logic definition, controller state machine (`SignalManager`), Max-Pressure logic, and PPO reinforcement learning policy training.
-                </p>
-            </div>
-            <div class="its-subcard">
-                <strong style="color:#14B8A6;">P2 — Experiment Infrastructure, Benchmarking & Frontend:</strong>
-                <p style="font-size:0.85rem; margin-top:0.25rem;">
-                    Responsible for deterministic demand generation (`src/routes`), M03 experiment orchestrator and automated test harness, TripInfo metric extraction, M04.1 dashboard backend service, and M04.2 Streamlit frontend user interface.
-                </p>
-            </div>
-        </div>
-        """), unsafe_allow_html=True)
-
     with col_right:
         st.markdown(clean_html("""
         <div class="its-card" style="margin-bottom:1.5rem;">
@@ -79,7 +58,7 @@ def render_about():
                     </tr>
                     <tr>
                         <td><strong>Visualization</strong></td>
-                        <td>Altair 6.3.0 (Dark ITS theme)</td>
+                        <td>Altair 6.3.0 (Responsive theme)</td>
                     </tr>
                     <tr>
                         <td><strong>Data Pipeline</strong></td>

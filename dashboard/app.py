@@ -1,5 +1,5 @@
 """
-SIGNALSIM-INDIA Multipage Web Application (M04.2.3).
+SIGNALSIM-INDIA Multipage Web Application.
 
 Architecture:
 - Native Streamlit multipage navigation via st.navigation and st.Page.
@@ -39,6 +39,11 @@ st.set_page_config(
 # Initialize theme state
 if "theme" not in st.session_state:
     st.session_state["theme"] = "dark"
+
+# Configure top-left application logo
+logo_file = ROOT_DIR / "dashboard" / "assets" / "logo.png"
+if logo_file.is_file():
+    st.logo(str(logo_file), link="https://github.com/drititotla-ui/Signal-Sim")
 
 # Apply active ITS theme styling
 st.markdown(get_theme_css(st.session_state["theme"]), unsafe_allow_html=True)

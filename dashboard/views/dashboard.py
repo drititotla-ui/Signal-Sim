@@ -2,7 +2,7 @@
 Performance Dashboard View for SIGNALSIM-INDIA.
 
 Renders aggregate KPIs, controller comparison bar charts, matched-seed relative improvements,
-verified run-level records, and the M07 Side-by-Side Collision Safety Comparative Audit.
+verified run-level records, and the Side-by-Side Collision Safety Comparative Evaluation.
 """
 
 import altair as alt
@@ -36,16 +36,16 @@ def render_dashboard():
         [
             "Original Benchmark (1s All-Red, 68s Cycle)",
             "Safety Retimed Benchmark (3s All-Red, 72s Cycle)",
-            "🛡️ M07 Safety Impact & Collision Reduction Audit",
+            "🛡️ Safety Evaluation & Collision Reduction",
         ],
         horizontal=True,
-        help="Switch between evaluation datasets or inspect the M07 side-by-side collision safety comparative audit.",
+        help="Switch between evaluation datasets or inspect the side-by-side safety evaluation and collision reduction audit.",
     )
 
     orig_service = get_service()
     safe_service = get_safety_service()
 
-    if benchmark_mode == "🛡️ M07 Safety Impact & Collision Reduction Audit":
+    if benchmark_mode == "🛡️ Safety Evaluation & Collision Reduction":
         _render_safety_audit_view(orig_service, safe_service, scenario_meta)
     elif benchmark_mode == "Safety Retimed Benchmark (3s All-Red, 72s Cycle)":
         _render_standard_dashboard_view(safe_service, scenario_meta, is_safety=True)
@@ -73,7 +73,7 @@ def _render_standard_dashboard_view(service, scenario_meta, is_safety=False):
     if is_safety:
         st.markdown(clean_html("""
         <div class="banner-complete-dark" style="border-left:4px solid #14B8A6; background:rgba(20, 184, 166, 0.1);">
-            <strong>🛡️ Retimed Safety Benchmark Active (M07):</strong> Displaying evaluation results with All-Red clearance increased from <strong>1.0s to 3.0s</strong> (IRC:93-1985 standard for 30m intersection), adjusting the Fixed-Time cycle from 68s to 72s. Traffic routes, demand realizations, and controller logic remain strictly identical.
+            <strong>🛡️ Retimed Safety Benchmark Active:</strong> Displaying evaluation results with All-Red clearance increased from <strong>1.0s to 3.0s</strong> (IRC:93-1985 standard for 30m intersection), adjusting the Fixed-Time cycle from 68s to 72s. Traffic routes, demand realizations, and controller logic remain strictly identical.
         </div>
         """), unsafe_allow_html=True)
     elif status_info.get("is_partial", True):
@@ -401,7 +401,7 @@ def _render_standard_dashboard_view(service, scenario_meta, is_safety=False):
 
 def _render_safety_audit_view(orig_service, safe_service, scenario_meta):
     """
-    Renders M07 Side-by-Side Safety Benchmark Comparative Audit.
+    Renders Side-by-Side Safety Benchmark Comparative Evaluation.
     Explicitly contrasts the original benchmark against the retimed safety benchmark.
     """
     try:
@@ -415,13 +415,19 @@ def _render_safety_audit_view(orig_service, safe_service, scenario_meta):
         return
 
     # Safety Retimed Disclosure Banner
+    current_theme = st.session_state.get("theme", "dark")
+    is_dark = (current_theme == "dark")
+    banner_desc_color = "#CBD5E1" if is_dark else "#1E293B"
+    banner_meta_color = "#94A3B8" if is_dark else "#475569"
+    banner_bg = "rgba(20, 184, 166, 0.08)" if is_dark else "rgba(13, 148, 136, 0.08)"
+
     st.markdown(clean_html(f"""
-    <div class="banner-complete-dark" style="border-left:4px solid #14B8A6; background:rgba(20, 184, 166, 0.08); margin-bottom:1.5rem;">
-        <h4 style="margin:0 0 0.5rem 0; color:#2DD4BF;">🛡️ M07 Safety Benchmark Retimed Architecture</h4>
-        <div style="font-size:0.92rem; line-height:1.5; color:#CBD5E1;">
+    <div class="banner-complete-dark" style="border-left:4px solid #14B8A6; background:{banner_bg}; margin-bottom:1.5rem;">
+        <h4 style="margin:0 0 0.5rem 0; color:#2DD4BF;">🛡️ Retimed Safety Architecture & Clearance Evaluation</h4>
+        <div style="font-size:0.92rem; line-height:1.5; color:{banner_desc_color};">
             {meta.get('disclosure', '')}
         </div>
-        <div style="display:flex; gap:2rem; margin-top:0.75rem; font-size:0.85rem; color:#94A3B8;">
+        <div style="display:flex; gap:2rem; margin-top:0.75rem; font-size:0.85rem; color:{banner_meta_color};">
             <span>• <strong>Baseline Configuration:</strong> All-Red = 1.0s | Fixed-Time Cycle = 68.0s</span>
             <span>• <strong>Safety Retimed:</strong> All-Red = 3.0s | Fixed-Time Cycle = 72.0s</span>
             <span>• <strong>Standard:</strong> IRC:93-1985 Section 5</span>
@@ -596,8 +602,9 @@ def _render_safety_audit_view(orig_service, safe_service, scenario_meta):
         st.dataframe(sc_table, use_container_width=True, hide_index=True)
 
     # Audit Certification Footnote
-    st.markdown(clean_html("""
-    <div style="font-size:0.8rem; color:#64748B; margin-top:1.5rem; padding:1rem; border-top:1px solid #1E293B;">
-        🔒 <strong>M07 Data Integrity Certification:</strong> All collision counts are parsed directly from each run's terminal SUMO summary XML (<code>summary.xml</code>, <code>&lt;step collisions="..."&gt;</code>) and never inferred from TripInfo arrival timestamps. Both benchmark datasets (<code>results/summaries/</code> and <code>results/safety/summaries/</code>) are stored in isolated directories and loaded independently into dedicated, immutable service instances.
+    fn_border = "#1E293B" if is_dark else "#E2E8F0"
+    st.markdown(clean_html(f"""
+    <div style="font-size:0.8rem; color:#64748B; margin-top:1.5rem; padding:1rem; border-top:1px solid {fn_border};">
+        🔒 <strong>Data Integrity Certification:</strong> All collision counts are parsed directly from each run's terminal SUMO summary XML (<code>summary.xml</code>, <code>&lt;step collisions="..."&gt;</code>) and never inferred from TripInfo arrival timestamps. Both benchmark datasets (<code>results/summaries/</code> and <code>results/safety/summaries/</code>) are stored in isolated directories and loaded independently into dedicated, immutable service instances.
     </div>
     """), unsafe_allow_html=True)

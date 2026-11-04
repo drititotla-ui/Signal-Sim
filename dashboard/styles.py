@@ -30,9 +30,27 @@ header[data-testid="stHeader"] {
 
 /* Max container width & padding */
 .block-container {
-    padding-top: 1.25rem !important;
+    padding-top: 5rem !important;
     padding-bottom: 4rem !important;
     max-width: 1200px !important;
+}
+
+@media (max-width: 992px) {
+    .block-container {
+        padding-top: 5.75rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .block-container {
+        padding-top: 6.5rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .block-container {
+        padding-top: 7.5rem !important;
+    }
 }
 
 /* Streamlit Native Top Navigation Bar Styling */
@@ -420,6 +438,30 @@ button[kind="secondary"]:hover {
     border-color: #14B8A6 !important;
     color: #2DD4BF !important;
 }
+
+/* Simulation Info Box */
+.sim-info-box {
+    background-color: transparent !important;
+    border: 1px dashed #334155 !important;
+    color: #94A3B8 !important;
+}
+
+/* Dark Mode Segmented Control */
+[data-testid="stSegmentedControl"] {
+    background-color: #0F172A !important;
+    border: 1px solid #1E293B !important;
+}
+
+[data-testid="stSegmentedControl"] button {
+    color: #94A3B8 !important;
+}
+
+[data-testid="stSegmentedControl"] button[aria-checked="true"] {
+    background-color: #14B8A6 !important;
+    color: #0A0F1D !important;
+    font-weight: 700 !important;
+}
+
 </style>
 """
 
@@ -437,6 +479,63 @@ html, body, [data-testid="stAppViewContainer"], .stApp {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
+/* Ensure all typography is crisp, high-contrast navy/near-black across all pages */
+.stApp p,
+.stApp span,
+.stApp label,
+.stApp li,
+.stApp td,
+.stApp th,
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4,
+.stApp h5,
+.stApp h6,
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] span,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stMarkdownContainer"] strong,
+[data-testid="stMarkdownContainer"] em,
+[data-testid="stMarkdownContainer"] h1,
+[data-testid="stMarkdownContainer"] h2,
+[data-testid="stMarkdownContainer"] h3,
+[data-testid="stMarkdownContainer"] h4,
+[data-testid="stMarkdownContainer"] h5,
+[data-testid="stMarkdownContainer"] h6,
+[data-testid="stWidgetLabel"] label,
+[data-testid="stWidgetLabel"] p,
+[data-testid="stRadio"] label,
+[data-testid="stRadio"] span,
+[data-testid="stCheckbox"] label,
+[data-testid="stCheckbox"] span,
+[data-testid="stSelectbox"] label,
+[data-testid="stSelectbox"] span,
+[data-testid="stSelectbox"] div,
+[data-testid="stMetricLabel"] p,
+[data-testid="stMetricValue"] div,
+[data-testid="stExpander"] summary span,
+[data-testid="stExpander"] summary p,
+.stTabs [data-baseweb="tab"] {
+    color: #0F172A !important;
+}
+
+/* Secondary Muted Body Text */
+.section-subtitle,
+.its-card p,
+.its-card li,
+.hero-desc-dark,
+.sim-info-box,
+.subtext-muted {
+    color: #334155 !important;
+}
+
+.kpi-subtext-dark,
+.kpi-label-dark {
+    color: #475569 !important;
+}
+
+
 /* Hide Streamlit default clutter */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
@@ -447,9 +546,27 @@ header[data-testid="stHeader"] {
 
 /* Max container width & padding */
 .block-container {
-    padding-top: 1.25rem !important;
+    padding-top: 5rem !important;
     padding-bottom: 4rem !important;
     max-width: 1200px !important;
+}
+
+@media (max-width: 992px) {
+    .block-container {
+        padding-top: 5.75rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .block-container {
+        padding-top: 6.5rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .block-container {
+        padding-top: 7.5rem !important;
+    }
 }
 
 /* Streamlit Native Top Navigation Bar Styling */
@@ -837,6 +954,33 @@ button[kind="secondary"] {
 button[kind="secondary"]:hover {
     border-color: #0D9488 !important;
     color: #0D9488 !important;
+}
+/* Additional Light Mode Controls */
+[data-testid="stSegmentedControl"] {
+    background-color: #F1F5F9 !important;
+    border: 1px solid #CBD5E1 !important;
+}
+
+[data-testid="stSegmentedControl"] button {
+    color: #0F172A !important;
+}
+
+[data-testid="stSegmentedControl"] button[aria-checked="true"] {
+    background-color: #0D9488 !important;
+    color: #FFFFFF !important;
+}
+
+div[data-baseweb="popover"] div,
+div[data-baseweb="menu"] div,
+div[data-baseweb="menu"] li {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+}
+
+.sim-info-box {
+    background-color: #F8FAFC !important;
+    border: 1px dashed #CBD5E1 !important;
+    color: #334155 !important;
 }
 </style>
 """
