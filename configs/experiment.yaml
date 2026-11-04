@@ -71,6 +71,10 @@ controllers:
       name: "PPO Reinforcement Learning"
       type: "reinforcement_learning"
       description: "Proximal Policy Optimization policy with frozen weights and deterministic evaluation."
+    - id: "ppo_v6"
+      name: "PPO V6 Reinforcement Learning"
+      type: "reinforcement_learning"
+      description: "PPO V6 controller with target-phase action space, closed switch penalty loophole, and signal safety."
 
 # ------------------------------------------------------------------------------
 # Network and Vehicle Assets (Owned by P1)

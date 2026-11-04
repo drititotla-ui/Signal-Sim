@@ -19,7 +19,7 @@ import pandas as pd
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
-VALID_CONTROLLERS = ["fixed_time", "max_pressure"]
+VALID_CONTROLLERS = ["fixed_time", "max_pressure", "ppo_v6"]
 VALID_SCENARIOS = ["S1", "S2", "S3", "S4"]
 VALID_SEEDS = [42, 101, 202, 303, 404]
 
@@ -137,7 +137,7 @@ def run_single_simulation(
             stdout="",
             stderr="",
             metrics={},
-            error_message=f"Invalid controller '{controller_id}'. Allowed: {VALID_CONTROLLERS}. Note: PPO is experimental and disabled.",
+            error_message=f"Invalid controller '{controller_id}'. Allowed: {VALID_CONTROLLERS}.",
         )
 
     if scenario_id not in VALID_SCENARIOS:

@@ -49,6 +49,12 @@ def get_service() -> DashboardService:
     return DashboardService(ROOT_DIR / "results" / "summaries" / "master_summary.csv")
 
 
+@st.cache_resource
+def get_safety_service() -> DashboardService:
+    """Initializes and caches the DashboardService instance for the safety benchmark."""
+    return DashboardService(ROOT_DIR / "results" / "safety" / "summaries" / "master_summary.csv")
+
+
 @st.cache_data
 def get_scenario_metadata() -> Dict[str, Dict[str, Any]]:
     """

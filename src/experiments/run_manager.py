@@ -336,16 +336,30 @@ class ExperimentRunner:
         return results
 
     def save_master_summary(self, results: List[RunResult]) -> pd.DataFrame:
-        """Compiles run results into master CSV and JSON summary tables."""
+        """Compiles run results into master CSV and JSON summary tables with safe merge."""
         records = [r.to_dict() for r in results]
-        df = pd.DataFrame(records)
+        new_df = pd.DataFrame(records)
 
         csv_path = self.config.output.summaries_dir / "master_summary.csv"
         json_path = self.config.output.summaries_dir / "master_summary.json"
 
+        # Safely preserve existing benchmark results by upserting on run_id
+        if csv_path.exists():
+            try:
+                existing_df = pd.read_csv(csv_path)
+                combined_df = pd.concat([existing_df, new_df], ignore_index=True)
+                df = combined_df.drop_duplicates(subset=["run_id"], keep="last")
+            except Exception:
+                df = new_df
+        else:
+            df = new_df
+
         df.to_csv(csv_path, index=False)
+
+        # Merge JSON summary similarly
+        all_records = df.to_dict(orient="records")
         with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(records, f, indent=2)
+            json.dump(all_records, f, indent=2)
 
         print(f"\nMaster summary saved to: {csv_path}")
         return df

@@ -13,6 +13,7 @@ import pandas as pd
 from src.dashboard.comparison import (
     compare_controllers_aggregate,
     compare_controllers_by_seed,
+    compare_safety_benchmarks,
 )
 from src.dashboard.data_loader import (
     DashboardDataError,
@@ -89,6 +90,7 @@ class DashboardService:
             "mean_waiting_time": _safe_mean("mean_waiting_time"),
             "mean_time_loss": _safe_mean("mean_time_loss"),
             "mean_throughput_vph": _safe_mean("throughput_vph"),
+            "total_collisions": int(success_df["collisions"].sum()) if "collisions" in success_df.columns else 0,
         }
 
     def get_available_controllers(self) -> List[str]:
@@ -211,3 +213,17 @@ class DashboardService:
             expected_scenarios=expected_scenarios,
             expected_seeds=expected_seeds,
         )
+
+    def get_safety_comparison(
+        self,
+        safety_data_path: Optional[Union[str, Path]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Computes side-by-side comparative evaluation against the retimed safety benchmark.
+        Guarantees original and safety datasets are loaded separately and never combined or overwritten.
+        """
+        path = Path(safety_data_path) if safety_data_path else Path("results/safety/summaries/master_summary.csv")
+        safety_service = DashboardService(data_path=path)
+        orig_df = self.load_data()
+        safe_df = safety_service.load_data()
+        return compare_safety_benchmarks(orig_df, safe_df)

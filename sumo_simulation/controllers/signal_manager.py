@@ -14,7 +14,7 @@ class SignalManager:
     MIN_GREEN = 10.0
     MAX_GREEN = 60.0    
     YELLOW_TIME = 3.0
-    ALL_RED_TIME = 1.0
+    ALL_RED_TIME = 3.0  # Aligned with IRC:93-1985 clearance standards (30m intersection)
 
     STATES = [
         "GGGGgrrrrrGGGGgrrrrr",
@@ -25,13 +25,15 @@ class SignalManager:
         "rrrrrrrrrrrrrrrrrrrr"
     ]
 
-    def __init__(self, tls_id="J2", connection=None):
+    def __init__(self, tls_id="J2", connection=None, yellow_time=3.0, all_red_time=3.0):
         self.tls_id = tls_id
         self.conn = connection if connection is not None else traci
         self.group = 0
         self.stage = "green"
         self.stage_started = self.conn.simulation.getTime()
         self.pending_group = None
+        self.YELLOW_TIME = float(yellow_time)
+        self.ALL_RED_TIME = float(all_red_time)
 
         # Verify that SUMO has the expected program
         programs = self.conn.trafficlight.getAllProgramLogics(tls_id)

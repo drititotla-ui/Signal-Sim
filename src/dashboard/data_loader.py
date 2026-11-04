@@ -10,6 +10,7 @@ from dataclasses import dataclass
 import json
 import logging
 from pathlib import Path
+import re
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
@@ -39,6 +40,7 @@ EXPECTED_COLUMNS: Dict[str, Any] = {
     "mean_waiting_time": "float64",
     "mean_time_loss": "float64",
     "throughput_vph": "float64",
+    "collisions": "Int64",
 }
 
 NUMERIC_METRIC_COLUMNS = [
@@ -51,6 +53,7 @@ NUMERIC_METRIC_COLUMNS = [
 ]
 
 INTEGER_COUNT_COLUMNS = [
+    "collisions",
     "total_vehicles",
     "completed_vehicles",
     "unfinished_vehicles",
@@ -222,6 +225,40 @@ def _load_json(file_path: Path) -> pd.DataFrame:
     return df
 
 
+def extract_collisions_from_summary(
+    summary_path: Optional[Union[str, Path]],
+    base_dir: Optional[Union[str, Path]] = None,
+) -> int:
+    """
+    Extracts final cumulative junction collision count from a SUMO summary XML file.
+
+    Reads directly from the last recorded XML step tag attributes, avoiding full DOM tree
+    allocation for optimal performance across large evaluation files.
+    Never infers collision metrics from TripInfo XML.
+    """
+    if not summary_path or pd.isna(summary_path):
+        return 0
+    p = Path(str(summary_path))
+    if not p.is_file() and base_dir is not None:
+        candidate = Path(base_dir) / p.name
+        if candidate.is_file():
+            p = candidate
+    if not p.is_file():
+        return 0
+    size = p.stat().st_size
+    if size == 0:
+        return 0
+    try:
+        with open(p, "rb") as f:
+            seek_pos = max(0, size - 8192)
+            f.seek(seek_pos)
+            tail = f.read().decode("utf-8", errors="ignore")
+        matches = re.findall(r'collisions="(\d+)"', tail)
+        return int(matches[-1]) if matches else 0
+    except Exception:
+        return 0
+
+
 def _validate_and_sanitize_dataframe(df: pd.DataFrame, source_file: Path) -> pd.DataFrame:
     """
     Validates required columns, checks for duplicates, and casts data types cleanly.
@@ -265,5 +302,14 @@ def _validate_and_sanitize_dataframe(df: pd.DataFrame, source_file: Path) -> pd.
                 sanitized[col] = pd.to_numeric(sanitized[col], errors="coerce").astype("Int64")
             else:
                 sanitized[col] = sanitized[col].astype("string")
+
+
+    # Ensure collisions column is populated from SUMO summary XML (never inferred from TripInfo)
+    if "collisions" not in sanitized.columns or sanitized["collisions"].isna().all():
+        base_dir = source_file.parent if source_file else Path("results/summaries")
+        sanitized["collisions"] = sanitized["summary_path"].apply(
+            lambda sp: extract_collisions_from_summary(sp, base_dir=base_dir)
+        )
+    sanitized["collisions"] = pd.to_numeric(sanitized["collisions"], errors="coerce").fillna(0).astype("Int64")
 
     return sanitized

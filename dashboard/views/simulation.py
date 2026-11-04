@@ -68,10 +68,10 @@ def render_simulation():
                     <td>Ready for execution & benchmark evaluation</td>
                 </tr>
                 <tr>
-                    <td><strong>PPO Policy</strong></td>
+                    <td><strong>PPO V6 Policy</strong></td>
                     <td>Deep Reinforcement Learning</td>
-                    <td><span style="color:#FB7185; font-weight:700;">⚠ Experimental (Non-selectable)</span></td>
-                    <td>Under training validation — disabled in benchmark runner</td>
+                    <td><span style="color:#2DD4BF; font-weight:700;">✓ Operational RL Candidate</span></td>
+                    <td>Ready for execution & benchmark evaluation (stochastic inference)</td>
                 </tr>
             </tbody>
         </table>
@@ -89,6 +89,7 @@ def render_simulation():
     controller_map = {
         "Fixed-Time Baseline (fixed_time)": "fixed_time",
         "Max-Pressure Adaptive (max_pressure)": "max_pressure",
+        "PPO V6 RL Policy (ppo_v6)": "ppo_v6",
     }
 
     with col_ctrl:
@@ -96,12 +97,12 @@ def render_simulation():
             "Select Controller:",
             options=list(controller_map.keys()),
             index=0,
-            help="Select the operational traffic signal controller. PPO is experimental and disabled.",
+            help="Select the operational traffic signal controller: Fixed-Time, Max-Pressure, or PPO V6 (stochastic).",
         )
         selected_controller_id = controller_map[selected_ctrl_label]
         st.markdown(textwrap.dedent("""
-        <div style="font-size:0.8rem; color:#FB7185; margin-top:0.35rem; font-weight:600;">
-            • PPO Policy: Experimental — not available for execution
+        <div style="font-size:0.8rem; color:#2DD4BF; margin-top:0.35rem; font-weight:600;">
+            • PPO V6 Policy: Operational RL model loaded from models/ppo_v6_model.zip (stochastic inference)
         </div>
         """).strip(), unsafe_allow_html=True)
 

@@ -104,9 +104,8 @@ def render_home():
                 Greedily prioritizes phases with the highest network pressure without requiring origin-destination matrix predictions.
             </p>
             <p>
-                <strong>3. Deep Reinforcement Learning (PPO — Coming Soon):</strong><br>
-                Proximal Policy Optimization policy trained on queue states and sublane occupancy metrics.
-                Currently in development and evaluation staging.
+                <strong>3. Deep Reinforcement Learning (PPO V6 Target-Phase):</strong><br>
+                Proximal Policy Optimization policy with target-phase action selection (EW vs NS) and closed switch-penalty safety dynamics. Evaluated with stochastic inference matching Fixed-Time baseline travel times.
             </p>
         </div>
         """), unsafe_allow_html=True)

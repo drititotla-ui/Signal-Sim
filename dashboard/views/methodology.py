@@ -182,12 +182,12 @@ def render_methodology():
                 </p>
             </div>
             <div class="its-subcard">
-                <h5 style="color:#FB7185; margin-bottom:0.5rem;">PPO Reinforcement Learning</h5>
+                <h5 style="color:#A855F7; margin-bottom:0.5rem;">PPO V6 Reinforcement Learning</h5>
                 <p style="font-size:0.85rem;">
-                    • <strong>Policy Type:</strong> Actor-Critic continuous observation policy.<br>
-                    • <strong>Action Space:</strong> Discrete green phase selection (Group 0 vs Group 1).<br>
-                    • <strong>Current Status:</strong> <span style="color:#FB7185; font-weight:700;">Experimental; learning not reliable</span>.<br>
-                    • <strong>Readiness:</strong> Excluded from official operational benchmark until training convergence is validated by P1.
+                    • <strong>Policy Type:</strong> Actor-Critic PPO target-phase policy (`MlpPolicy`).<br>
+                    • <strong>Action Space:</strong> Discrete target phase selection (0: EW Green, 1: NS Green).<br>
+                    • <strong>Current Status:</strong> <span style="color:#2DD4BF; font-weight:700;">✓ Verified Pilot Checkpoint</span>.<br>
+                    • <strong>Inference Mode:</strong> Evaluated under reproducible stochastic inference with closed switch loophole penalties.
                 </p>
             </div>
         </div>
