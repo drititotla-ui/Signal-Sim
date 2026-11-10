@@ -13,3 +13,27 @@ results/traffic_scenarios/*.log
 sumo_simulation/*_tripinfo.xml
 sumo_simulation/*_summary.xml
 sumo_simulation/*_validation.log
+
+# Local backups
+backups/
+*.bak
+*.tmp
+# Generated simulation outputs
+results/raw_tripinfo/
+results/safety/raw_tripinfo/
+results/evaluation_pilot_m05/
+results/inference_comparison/
+results/training_logs/
+results/**/training_logs/
+# Generated run logs and per-seed outputs
+results/summaries/*.log
+results/summaries/*_seed*.json
+results/safety/summaries/*.log
+results/safety/summaries/*_seed*.json
+# Generated routes and test artifacts
+simulation/routes/route_scenario_*.rou.xml
+lht_working/candidate/tripinfo_lht_test.xml
+# Python cache
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
