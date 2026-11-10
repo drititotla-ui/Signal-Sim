@@ -37,3 +37,14 @@ lht_working/candidate/tripinfo_lht_test.xml
 **/__pycache__/
 *.py[cod]
 .pytest_cache/
+
+# Local Python environment and caches
+.venv/
+.pytest_cache/
+__pycache__/
+
+# Local backups
+backups/
+
+# Generated output
+output/
